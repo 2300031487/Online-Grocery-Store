@@ -1,0 +1,15 @@
+Backend/target/
+Backend/.metadata/
+Backend/.settings/
+Backend/.classpath
+Backend/.factorypath
+Backend/.project
+
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.vite/
+
+*.log
+*.iml
+.idea/
+.vscode/

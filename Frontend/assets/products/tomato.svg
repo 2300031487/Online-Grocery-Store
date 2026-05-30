@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" role="img" aria-labelledby="title">
+  <title id="title">Tomato product image</title>
+  <rect width="360" height="240" rx="24" fill="#fff5f2"/>
+  <circle cx="180" cy="132" r="72" fill="#df3f32"/>
+  <path d="M180 58l16 35 39-12-26 31 31 25-42-2-18 38-18-38-42 2 31-25-26-31 39 12 16-35Z" fill="#1f8a5b"/>
+  <circle cx="210" cy="108" r="14" fill="#fff7c8" opacity=".75"/>
+  <ellipse cx="180" cy="205" rx="92" ry="14" fill="#eadad6"/>
+</svg>

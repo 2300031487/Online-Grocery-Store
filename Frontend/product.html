@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCart Product</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell product-page-shell">
+      <aside class="sidebar">
+        <a class="brand brand-link" href="index.html">
+          <div class="brand-mark" aria-hidden="true"><span></span></div>
+          <div>
+            <div class="brand-title">FreshCart</div>
+            <div class="brand-subtitle">Product details</div>
+          </div>
+        </a>
+        <nav class="nav">
+          <a class="nav-button active" href="customer.html"><span class="nav-icon nav-products" aria-hidden="true"></span>Store</a>
+          <a class="nav-button" href="admin.html"><span class="nav-icon nav-admin" aria-hidden="true"></span>Admin</a>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <header class="topbar product-detail-topbar">
+          <div>
+            <p class="page-kicker">Product detail</p>
+            <h1 class="page-title" id="productPageTitle">Loading product</h1>
+            <div class="header-actions">
+              <a class="btn secondary" href="customer.html">Back to Store</a>
+              <button class="btn secondary" id="refreshProductBtn">Refresh</button>
+            </div>
+          </div>
+        </header>
+
+        <section id="productPageContent" class="product-page-content"></section>
+      </main>
+
+      <aside class="right-rail">
+        <section class="panel">
+          <h3>Review rules</h3>
+          <p class="muted">Customers can rate a product only after it has been delivered in their order history.</p>
+        </section>
+        <section class="panel">
+          <h3>Connection</h3>
+          <p class="muted">Product details and reviews load from the Spring Boot API.</p>
+        </section>
+      </aside>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script type="module" src="js/productPage.js?v=20260529-razorpay-errors"></script>
+  </body>
+</html>

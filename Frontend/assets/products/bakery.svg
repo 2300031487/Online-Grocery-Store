@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" role="img" aria-labelledby="title">
+  <title id="title">Bakery product image</title>
+  <rect width="360" height="240" rx="24" fill="#fff7e7"/>
+  <path d="M91 145c0-48 41-83 91-83 49 0 87 35 87 83 0 31-25 50-89 50-63 0-89-19-89-50Z" fill="#d18a3f"/>
+  <path d="M127 128c12-25 31-41 57-48M177 137c14-28 34-46 61-53" fill="none" stroke="#fff0cc" stroke-width="10" stroke-linecap="round"/>
+  <ellipse cx="180" cy="204" rx="95" ry="14" fill="#eadfca"/>
+</svg>

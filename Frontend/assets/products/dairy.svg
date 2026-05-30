@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" role="img" aria-labelledby="title">
+  <title id="title">Dairy product image</title>
+  <rect width="360" height="240" rx="24" fill="#f1f8ff"/>
+  <path d="M124 65h92l20 42v92H104v-92l20-42Z" fill="#ffffff" stroke="#b9d2e8" stroke-width="8"/>
+  <path d="M124 65h92l-18 42h-94l20-42Z" fill="#d8ecff"/>
+  <rect x="128" y="128" width="84" height="42" rx="10" fill="#1f8a5b"/>
+  <circle cx="220" cy="94" r="12" fill="#f7bd2a"/>
+  <ellipse cx="170" cy="205" rx="84" ry="13" fill="#dfe8e2"/>
+</svg>

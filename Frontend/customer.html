@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCart Customer</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand brand-link" href="index.html">
+          <div class="brand-mark" aria-hidden="true"><span></span></div>
+          <div>
+            <div class="brand-title">FreshCart</div>
+            <div class="brand-subtitle">Customer store</div>
+          </div>
+        </a>
+
+        <nav class="nav">
+          <button class="nav-button active" data-view="products"><span class="nav-icon nav-products" aria-hidden="true"></span>Products</button>
+          <button class="nav-button" data-view="cart"><span class="nav-icon nav-cart" aria-hidden="true"></span>Cart</button>
+          <button class="nav-button" data-view="orders"><span class="nav-icon nav-orders" aria-hidden="true"></span>Orders</button>
+          <button class="nav-button" data-view="profile"><span class="nav-icon nav-admin" aria-hidden="true"></span>Profile</button>
+        </nav>
+
+        <div class="sidebar-card">
+          <strong>Customer app</strong>
+          <span>Shop products, manage your cart, place orders, and follow delivery status.</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="page-kicker">Fresh groceries</p>
+            <h1 class="page-title">Shop daily essentials with live order tracking</h1>
+            <div class="header-actions">
+              <button class="btn secondary" data-jump-view="cart">View Cart</button>
+              <button class="btn secondary" data-jump-view="orders">Track Orders</button>
+              <button class="btn secondary" id="refreshAppBtn">Refresh Store</button>
+            </div>
+          </div>
+          <div class="toolbar">
+            <label class="search-wrap">
+              <span class="control-icon search-icon" aria-hidden="true"></span>
+              <input id="searchInput" placeholder="Search milk, apple, bread..." />
+            </label>
+            <label class="sort-wrap">
+              <span>Sort</span>
+              <select id="sortProducts">
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="stock-desc">Stock: High to Low</option>
+              </select>
+            </label>
+          </div>
+        </header>
+
+        <section class="ops-banner customer-banner" aria-label="Store service status">
+          <div>
+            <span class="status-dot"></span>
+            <strong>Delivering today</strong>
+            <small>Typical slot: 30-45 min</small>
+          </div>
+          <div>
+            <strong>Freshness checked</strong>
+            <small>Picked after order confirmation</small>
+          </div>
+          <div>
+            <strong>Secure checkout</strong>
+            <small>JWT protected cart and orders</small>
+          </div>
+        </section>
+
+        <section class="stats-strip" aria-label="Customer summary">
+          <div><span id="productCount">0</span><small>Products</small></div>
+          <div><span id="cartCount">0</span><small>Cart items</small></div>
+          <div><span id="orderCount">0</span><small>Orders</small></div>
+        </section>
+
+        <section class="view active" data-view="products">
+          <div class="section-head">
+            <div>
+              <h2>Available Products</h2>
+              <p class="muted">Filter by category, compare stock, and add items directly to your cart.</p>
+            </div>
+          </div>
+          <div class="category-strip" id="categoryStrip"></div>
+          <div id="productGrid" class="grid"></div>
+        </section>
+
+        <section class="view" data-view="cart">
+          <div class="panel">
+            <div class="row-between">
+              <h3>Checkout Cart</h3>
+              <span class="chip" id="cartTotal">Rs 0.00</span>
+            </div>
+            <div id="cartReview" class="cart-review"></div>
+            <div id="cartList" class="cart-list"></div>
+            <div class="cart-summary">
+              <div class="checkout-breakdown" aria-label="Checkout total">
+                <div><span>Subtotal</span><strong id="checkoutSubtotal">Rs 0.00</strong></div>
+                <div><span>Delivery</span><strong id="checkoutDelivery">Rs 0.00</strong></div>
+                <div class="grand-total"><span>Payable</span><strong id="checkoutGrand">Rs 0.00</strong></div>
+              </div>
+              <label class="field">
+                <span>Delivery address</span>
+                <textarea id="deliveryAddress">123 Grocery Street</textarea>
+              </label>
+              <div class="address-book">
+                <label class="field">
+                  <span>Address label</span>
+                  <input id="addressLabel" placeholder="Home, Office, Other" value="Home" />
+                </label>
+                <label class="field">
+                  <span>Saved addresses</span>
+                  <select id="savedAddressSelect"></select>
+                </label>
+                <div class="address-actions">
+                  <button class="btn secondary" type="button" id="saveAddressBtn">Save Address</button>
+                  <button class="btn secondary" type="button" id="removeAddressBtn">Remove</button>
+                </div>
+              </div>
+              <div class="two-col">
+                <label class="field">
+                  <span>Delivery slot</span>
+                  <select id="deliverySlot">
+                    <option>Today, 30-45 min</option>
+                    <option>Today, 6 PM - 8 PM</option>
+                    <option>Tomorrow, 8 AM - 10 AM</option>
+                    <option>Tomorrow, 5 PM - 7 PM</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Payment</span>
+                  <select id="paymentMethod">
+                    <option value="COD">Cash on Delivery</option>
+                    <option value="ONLINE">Online Payment</option>
+                  </select>
+                </label>
+              </div>
+              <div class="two-col">
+                <button class="btn" id="placeOrderBtn">Place Order</button>
+                <button class="btn secondary" id="clearCartBtn">Clear Cart</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" data-view="orders">
+          <div class="panel">
+            <div class="row-between">
+              <h3>My Orders</h3>
+              <span class="chip">Live status ready</span>
+            </div>
+            <div class="segmented order-filter" aria-label="Filter customer orders">
+              <button class="active" data-customer-order-filter="ALL">History</button>
+              <button data-customer-order-filter="ACTIVE">Active</button>
+              <button data-customer-order-filter="DELIVERED">Delivered</button>
+            </div>
+            <div id="ordersList" class="orders-list"></div>
+          </div>
+        </section>
+
+        <section class="view" data-view="profile">
+          <div class="panel profile-panel" id="profilePanel"></div>
+        </section>
+      </main>
+
+      <aside class="right-rail">
+        <section class="auth-card" id="authBox"></section>
+        <section class="panel">
+          <div class="row-between">
+            <h3>Connection</h3>
+            <span class="chip neutral" id="backendStatus">Checking</span>
+          </div>
+          <p class="muted">Your Spring Boot backend should be running before login, cart, and order actions.</p>
+          <label class="field">
+            <span>API base URL</span>
+            <input id="apiBaseUrl" />
+          </label>
+          <button class="btn secondary full" id="checkBackendBtn">Check Backend</button>
+        </section>
+        <section class="panel">
+          <h3>Admin?</h3>
+          <p class="muted">Use the admin app for catalog and fulfillment management.</p>
+          <a class="btn secondary full" href="admin.html">Open Admin App</a>
+        </section>
+        <section class="panel promise-list">
+          <h3>Delivery Promise</h3>
+          <div><strong>Packed carefully</strong><span>Cold items and bakery kept separate.</span></div>
+          <div><strong>Live updates</strong><span>Order status changes appear in your order timeline.</span></div>
+          <div><strong>Easy changes</strong><span>Update quantities before checkout.</span></div>
+        </section>
+        <section class="panel ops-panel">
+          <div class="row-between">
+            <h3>Shopping Assist</h3>
+            <span class="chip" id="assistStatus">Ready</span>
+          </div>
+          <div id="shoppingAssist" class="compact-list"></div>
+        </section>
+      </aside>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="productModal" class="modal" hidden>
+      <div class="modal-backdrop" data-close-product-modal></div>
+      <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+        <button class="modal-close" type="button" data-close-product-modal>Close</button>
+        <div id="productModalContent"></div>
+      </section>
+    </div>
+    <script type="module" src="js/app.js?v=20260529-razorpay-errors"></script>
+  </body>
+</html>

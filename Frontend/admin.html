@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCart Admin</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell admin-shell">
+      <aside class="sidebar">
+        <a class="brand brand-link" href="index.html">
+          <div class="brand-mark" aria-hidden="true"><span></span></div>
+          <div>
+            <div class="brand-title">FreshCart</div>
+            <div class="brand-subtitle">Admin dashboard</div>
+          </div>
+        </a>
+
+        <nav class="nav">
+          <button class="nav-button active" data-view="dashboard"><span class="nav-icon nav-admin" aria-hidden="true"></span>Dashboard</button>
+          <button class="nav-button" data-view="catalog"><span class="nav-icon nav-products" aria-hidden="true"></span>Catalog</button>
+          <button class="nav-button" data-view="orders"><span class="nav-icon nav-orders" aria-hidden="true"></span>Orders</button>
+          <button class="nav-button" data-view="profile"><span class="nav-icon nav-admin" aria-hidden="true"></span>Profile</button>
+        </nav>
+
+        <div class="sidebar-card">
+          <strong>Admin app</strong>
+          <span>Manage categories, inventory, and fulfillment separately from the customer storefront.</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="page-kicker">Store operations</p>
+            <h1 class="page-title">Manage catalog, stock, and order fulfillment</h1>
+            <div class="header-actions">
+              <button class="btn secondary" data-jump-view="dashboard">New Product</button>
+              <button class="btn secondary" data-jump-view="orders">Review Orders</button>
+              <button class="btn secondary" id="refreshAppBtn">Refresh Data</button>
+            </div>
+          </div>
+          <div class="toolbar">
+            <label class="search-wrap">
+              <span class="control-icon search-icon" aria-hidden="true"></span>
+              <input id="searchInput" placeholder="Search inventory..." />
+            </label>
+            <label class="sort-wrap">
+              <span>Sort</span>
+              <select id="sortProducts">
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="stock-desc">Stock: High to Low</option>
+              </select>
+            </label>
+          </div>
+        </header>
+
+        <section class="ops-banner admin-banner" aria-label="Operations status">
+          <div>
+            <span class="status-dot"></span>
+            <strong>Store console</strong>
+            <small>Catalog and fulfillment controls</small>
+          </div>
+          <div>
+            <strong>Inventory health</strong>
+            <small id="inventoryHealth">Waiting for catalog</small>
+          </div>
+          <div>
+            <strong>Fulfillment queue</strong>
+            <small id="fulfillmentQueue">Login as admin to load orders</small>
+          </div>
+        </section>
+
+        <section class="stats-strip" aria-label="Admin summary">
+          <div><span id="productCount">0</span><small>Products</small></div>
+          <div><span id="cartCount">0</span><small>Cart items</small></div>
+          <div><span id="orderCount">0</span><small>Orders</small></div>
+        </section>
+
+        <section class="view active" data-view="dashboard">
+          <div id="adminAccess" class="admin-layout" hidden>
+            <form id="categoryForm" class="panel form-grid">
+              <h3>Category Setup</h3>
+              <label class="field">
+                <span>Category name</span>
+                <input name="name" placeholder="Fruits" required />
+              </label>
+              <label class="field">
+                <span>Description</span>
+                <textarea name="description" placeholder="Fresh fruits and seasonal picks"></textarea>
+              </label>
+              <button class="btn" type="submit">Create Category</button>
+            </form>
+
+            <form id="productForm" class="panel form-grid">
+              <h3>Inventory Control</h3>
+              <div class="two-col">
+                <label class="field">
+                  <span>Product</span>
+                  <input name="name" placeholder="Apple" required />
+                </label>
+                <label class="field">
+                  <span>Category</span>
+                  <select id="productCategory" name="categoryId" required></select>
+                </label>
+              </div>
+              <label class="field">
+                <span>Description</span>
+                <textarea name="description" placeholder="Fresh and ready for delivery"></textarea>
+              </label>
+              <label class="field">
+                <span>Product image</span>
+                <select name="imageUrl">
+                  <option value="">Auto choose by product name</option>
+                  <option value="assets/products/apple.svg">Apple</option>
+                  <option value="assets/products/mango.svg">Mango</option>
+                  <option value="assets/products/tomato.svg">Tomato</option>
+                  <option value="assets/products/vegetable.svg">Vegetable</option>
+                  <option value="assets/products/dairy.svg">Dairy</option>
+                  <option value="assets/products/bakery.svg">Bakery</option>
+                  <option value="assets/products/default.svg">Default grocery</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Custom image URL</span>
+                <input name="customImageUrl" placeholder="Optional direct image URL" />
+              </label>
+              <label class="field">
+                <span>Upload product image</span>
+                <input id="productImageFile" name="productImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" />
+              </label>
+              <div class="image-preview-card">
+                <img id="productImagePreview" src="assets/products/default.svg" alt="Product preview" />
+                <div>
+                  <strong id="productPreviewTitle">Product preview</strong>
+                  <span id="productPreviewMeta">Choose an image or type a custom URL.</span>
+                </div>
+              </div>
+              <div class="two-col">
+                <label class="field">
+                  <span>Price</span>
+                  <input name="price" type="number" step="0.01" min="0.01" placeholder="40.50" required />
+                </label>
+                <label class="field">
+                  <span>Stock</span>
+                  <input name="stockQuantity" type="number" min="0" placeholder="10" required />
+                </label>
+              </div>
+              <div class="two-col">
+                <button class="btn" type="submit">Create Product</button>
+                <button class="btn secondary" type="button" id="clearProductDraftBtn">Clear Draft</button>
+              </div>
+            </form>
+
+            <form id="orderStatusForm" class="panel form-grid">
+              <h3>Fulfillment Desk</h3>
+              <div class="two-col">
+                <label class="field">
+                  <span>Order ID</span>
+                  <input name="orderId" type="number" min="1" required />
+                </label>
+                <label class="field">
+                  <span>Status</span>
+                  <select name="status">
+                    <option>PLACED</option>
+                    <option>CONFIRMED</option>
+                    <option>PACKED</option>
+                    <option>OUT_FOR_DELIVERY</option>
+                    <option>DELIVERED</option>
+                    <option>CANCELLED</option>
+                  </select>
+                </label>
+              </div>
+              <button class="btn" type="submit">Update Status</button>
+            </form>
+
+            <section class="panel ops-panel">
+              <div class="row-between">
+                <h3>Low Stock Watch</h3>
+                <span class="chip warn" id="lowStockCount">0 items</span>
+              </div>
+              <div id="lowStockList" class="compact-list"></div>
+            </section>
+
+            <section class="panel ops-panel">
+              <div class="row-between">
+                <h3>Active Fulfillment</h3>
+                <span class="chip blue" id="activeOrderCount">0 active</span>
+              </div>
+              <div id="activeOrderList" class="compact-list"></div>
+            </section>
+
+            <section class="panel analytics-panel full-span">
+              <div class="row-between">
+                <h3>Store Analytics</h3>
+                <span class="chip blue" id="analyticsRange">Live</span>
+              </div>
+              <div class="analytics-grid">
+                <div><span>Revenue</span><strong id="analyticsRevenue">Rs 0.00</strong></div>
+                <div><span>Today orders</span><strong id="analyticsTodayOrders">0</strong></div>
+                <div><span>Average order</span><strong id="analyticsAverageOrder">Rs 0.00</strong></div>
+              </div>
+              <div class="analytics-list" id="topProductsList"></div>
+            </section>
+          </div>
+          <div class="panel" id="adminHint">
+            <h3>Admin Login Required</h3>
+            <p class="muted">Login with an ADMIN account to manage categories, products, and order status.</p>
+          </div>
+        </section>
+
+        <section class="view" data-view="catalog">
+          <div class="section-head">
+            <div>
+              <h2>Inventory Catalog</h2>
+              <p class="muted">Review active products and remove discontinued items.</p>
+            </div>
+          </div>
+          <div class="category-strip" id="categoryStrip"></div>
+          <div id="productGrid" class="grid"></div>
+        </section>
+
+        <section class="view" data-view="orders">
+          <div class="panel">
+            <div class="row-between">
+              <h3>All Orders</h3>
+              <span class="chip">Admin fulfillment</span>
+            </div>
+            <div class="segmented order-filter" aria-label="Filter admin orders">
+              <button class="active" data-admin-order-filter="ACTIVE">Active</button>
+              <button data-admin-order-filter="PLACED">Placed</button>
+              <button data-admin-order-filter="OUT_FOR_DELIVERY">Out</button>
+              <button data-admin-order-filter="DONE">Done</button>
+              <button data-admin-order-filter="ALL">All</button>
+            </div>
+            <div id="ordersList" class="orders-list"></div>
+          </div>
+        </section>
+
+        <section class="view" data-view="profile">
+          <div class="panel profile-panel" id="profilePanel"></div>
+        </section>
+      </main>
+
+      <aside class="right-rail">
+        <section class="auth-card" id="authBox"></section>
+        <section class="panel">
+          <div class="row-between">
+            <h3>Connection</h3>
+            <span class="chip neutral" id="backendStatus">Checking</span>
+          </div>
+          <p class="muted">Admin actions require the Spring Boot backend and an ADMIN token.</p>
+          <label class="field">
+            <span>API base URL</span>
+            <input id="apiBaseUrl" />
+          </label>
+          <button class="btn secondary full" id="checkBackendBtn">Check Backend</button>
+        </section>
+        <section class="panel">
+          <h3>Customer?</h3>
+          <p class="muted">Use the customer app to browse and place orders.</p>
+          <a class="btn secondary full" href="customer.html">Open Customer App</a>
+        </section>
+      </aside>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="productModal" class="modal" hidden>
+      <div class="modal-backdrop" data-close-product-modal></div>
+      <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+        <button class="modal-close" type="button" data-close-product-modal>Close</button>
+        <div id="productModalContent"></div>
+      </section>
+    </div>
+    <script type="module" src="js/adminApp.js?v=20260529-razorpay-errors"></script>
+  </body>
+</html>

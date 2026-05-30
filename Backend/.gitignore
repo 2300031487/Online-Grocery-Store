@@ -4,8 +4,5 @@ target/
 *.iml
 
 HELP.md
-.mvn/
-mvnw
-mvnw.cmd
 
 *.log
